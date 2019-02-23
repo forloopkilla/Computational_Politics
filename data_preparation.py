@@ -26,15 +26,20 @@ def get_chinese_character_positions(raw):
             for word in get_chinese_words(raw)
             for i, char in enumerate(word)]
 
-def get_topic_distribution(lda_model, raw_input,sentences):
+def get_topic_distribution(lda_model, raw_input, dictionary):
     """Return a vecor of topical distribution of each document or text. 
-    :param raw: raw chinese text
+    :param lda_model: the output of the function gensim.models.ldamodel.LdaModel
+    :param raw_imput: raw chinese policy text or doc
+    :param dictionary: the output of corpora.Dictionary() function which is the vocab.
     """
-    dictionary = Dictionary(sentences)
-    other_corpus = [dictionary.doc2bow(text) for text in raw_input] # raw input should be tokenized
+    other_texts = [ # needs tokenized
+        get_chinese_words(raw_input)
+    ]
+    #dictionary = Dictionary(sentences)
+    other_corpus = [dictionary.doc2bow(text) for text in other_texts]
     unseen_doc = other_corpus[0]
-    vector = lda_model[unseen_doc]
-    return vector[0]
+    vector = lda_model[unseen_doc][0]
+    return(vector)
     
 def get_NdaysAgo_Data_from(today,date_col,df, days):
     """Retrieves data N-days ago. 
