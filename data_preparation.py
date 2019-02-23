@@ -2,9 +2,6 @@ import jieba
 import string
 import nltk
 
-import jieba
-import string
-import nltk
 def get_chinese_characters(raw):
     """Return list of Chinese characters in sentence.
     :param raw: raw chinese text
